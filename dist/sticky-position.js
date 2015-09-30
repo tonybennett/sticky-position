@@ -30,7 +30,7 @@
 		var _ref$computeWidth = _ref.computeWidth;
 		var computeWidth = _ref$computeWidth === undefined ? true : _ref$computeWidth;
 		var _ref$stickyClass = _ref.stickyClass;
-		var stickyClass = _ref$stickyClass === undefined ? '' : _ref$stickyClass;
+		var stickyClass = _ref$stickyClass === undefined ? null : _ref$stickyClass;
 
 		var top = null;
 		var isSticky = false;
@@ -53,10 +53,12 @@
 			primary.style.position = 'fixed';
 			isSticky = true;
 
-			if (primary.classList) {
-				primary.classList.add(stickyClass);
-			} else {
-				primary.className = primary.className + ' ' + stickyClass;
+			if (stickyClass) {
+				if (primary.classList) {
+					primary.classList.add(stickyClass);
+				} else {
+					primary.className = primary.className + ' ' + stickyClass;
+				}
 			}
 		}
 
@@ -70,10 +72,12 @@
 			placeholder.style.width = '';
 			isSticky = false;
 
-			if (primary.classList) {
-				primary.classList.remove(stickyClass);
-			} else {
-				primary.className = primary.className.replace(stickyClass, '');
+			if (stickyClass) {
+				if (primary.classList) {
+					primary.classList.remove(stickyClass);
+				} else {
+					primary.className = primary.className.replace(stickyClass, '');
+				}
 			}
 		}
 

@@ -3,7 +3,7 @@ export default function({
 	placeholder = null,
 	wrapper = null,
 	computeWidth = true,
-    stickyClass = ''
+    stickyClass = null
 } = {}){
 	let top = null;
 	let isSticky = false;
@@ -24,10 +24,12 @@ export default function({
 		primary.style.position = 'fixed';
 		isSticky = true;
 
-        if (primary.classList) {
-            primary.classList.add(stickyClass);
-        } else {
-            primary.className = `${primary.className} ${stickyClass}`;
+        if (stickyClass) {
+            if (primary.classList) {
+                primary.classList.add(stickyClass);
+            } else {
+                primary.className = `${primary.className} ${stickyClass}`;
+            }
         }
 	}
 
@@ -41,10 +43,12 @@ export default function({
 		placeholder.style.width = '';
 		isSticky = false;
 
-        if (primary.classList) {
-            primary.classList.remove(stickyClass);
-        } else {
-            primary.className = primary.className.replace(stickyClass, '');
+        if (stickyClass) {
+            if (primary.classList) {
+                primary.classList.remove(stickyClass);
+            } else {
+                primary.className = primary.className.replace(stickyClass, '');
+            }
         }
 	}
 
