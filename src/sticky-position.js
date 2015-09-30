@@ -3,11 +3,12 @@ export default function({
 	placeholder = null,
 	wrapper = null,
 	computeWidth = true,
+    stickyClass = ''
 } = {}){
 	let top = null;
 	let isSticky = false;
 
-	const nativeSupport = (function(){		
+	const nativeSupport = (function(){
 		if (this.isSupported !== null) {
 			return this.isSupported;
 		} else {
@@ -22,6 +23,12 @@ export default function({
 		if (isSticky === true) return;
 		primary.style.position = 'fixed';
 		isSticky = true;
+
+        if (primary.classList) {
+            primary.classList.add(stickyClass);
+        } else {
+            primary.className = `${primary.className} ${stickyClass}`;
+        }
 	}
 
 	function unstick() {
@@ -33,6 +40,12 @@ export default function({
 		placeholder.style.height = '';
 		placeholder.style.width = '';
 		isSticky = false;
+
+        if (primary.classList) {
+            primary.classList.remove(stickyClass);
+        } else {
+            primary.className = primary.className.replace(stickyClass, '');
+        }
 	}
 
 	function init() {
@@ -58,24 +71,24 @@ export default function({
 	function update() {
 		const rect = wrapper.getBoundingClientRect();
 		const sticky = rect.top < top;
-		
+
 		if (sticky) {
 			placeholder.style.height = rect.height + 'px';
-			
+
 			if (computeWidth) {
 				placeholder.style.width = rect.width + 'px';
 			}
-			
+
 			var parentRect = wrapper.parentNode.getBoundingClientRect();
-			
+
 			primary.style.top = Math.min(parentRect.top + parentRect.height - rect.height, top) + 'px';
 			primary.style.width = computeWidth ? rect.width+'px' : '100%';
 			primary.style.left = rect.left + 'px';
-			
+
 			stick();
 		} else {
 			unstick();
-		}	
+		}
 	}
 
 	function destroy() {
@@ -84,7 +97,7 @@ export default function({
 		window.removeEventListener('resize', update);
 		unstick();
 	}
-	
+
 	if (nativeSupport()) {
 		return {
 			update(){},

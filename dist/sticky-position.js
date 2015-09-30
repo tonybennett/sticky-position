@@ -19,7 +19,7 @@
 	'use strict';
 
 	module.exports = function () {
-		var _ref = arguments[0] === undefined ? {} : arguments[0];
+		var _ref = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
 		var _ref$primary = _ref.primary;
 		var primary = _ref$primary === undefined ? null : _ref$primary;
@@ -29,6 +29,8 @@
 		var wrapper = _ref$wrapper === undefined ? null : _ref$wrapper;
 		var _ref$computeWidth = _ref.computeWidth;
 		var computeWidth = _ref$computeWidth === undefined ? true : _ref$computeWidth;
+		var _ref$stickyClass = _ref.stickyClass;
+		var stickyClass = _ref$stickyClass === undefined ? '' : _ref$stickyClass;
 
 		var top = null;
 		var isSticky = false;
@@ -50,6 +52,12 @@
 			if (isSticky === true) return;
 			primary.style.position = 'fixed';
 			isSticky = true;
+
+			if (primary.classList) {
+				primary.classList.add(stickyClass);
+			} else {
+				primary.className = primary.className + ' ' + stickyClass;
+			}
 		}
 
 		function unstick() {
@@ -61,6 +69,12 @@
 			placeholder.style.height = '';
 			placeholder.style.width = '';
 			isSticky = false;
+
+			if (primary.classList) {
+				primary.classList.remove(stickyClass);
+			} else {
+				primary.className = primary.className.replace(stickyClass, '');
+			}
 		}
 
 		function init() {
@@ -123,7 +137,8 @@
 
 			return {
 				update: update,
-				destroy: destroy };
+				destroy: destroy
+			};
 		}
 	};
 });
