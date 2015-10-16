@@ -3,6 +3,7 @@ export default function({
 	placeholder = null,
 	wrapper = null,
 	computeWidth = true,
+	includePlaceholder = true,
     stickyClass = null
 } = {}){
 	let top = null;
@@ -65,6 +66,10 @@ export default function({
 		// Giving the placeholder an overflow of 'hidden' or 'auto' will allow it to clear any bottom margin extending beneath the primary element.
 		// Clearing that margin is needed so that it's contribution to the wrapper element's height can be measured with getBoundingClientRect.
 		placeholder.style.overflow = 'hidden';
+
+		if (!includePlaceholder) {
+			placeholder.style.display = 'none';
+		}
 
 		update();
 		window.addEventListener('load', update);

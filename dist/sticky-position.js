@@ -29,6 +29,8 @@
 		var wrapper = _ref$wrapper === undefined ? null : _ref$wrapper;
 		var _ref$computeWidth = _ref.computeWidth;
 		var computeWidth = _ref$computeWidth === undefined ? true : _ref$computeWidth;
+		var _ref$includePlaceholder = _ref.includePlaceholder;
+		var includePlaceholder = _ref$includePlaceholder === undefined ? true : _ref$includePlaceholder;
 		var _ref$stickyClass = _ref.stickyClass;
 		var stickyClass = _ref$stickyClass === undefined ? null : _ref$stickyClass;
 
@@ -94,6 +96,10 @@
 			// Giving the placeholder an overflow of 'hidden' or 'auto' will allow it to clear any bottom margin extending beneath the primary element.
 			// Clearing that margin is needed so that it's contribution to the wrapper element's height can be measured with getBoundingClientRect.
 			placeholder.style.overflow = 'hidden';
+
+			if (!includePlaceholder) {
+				placeholder.style.display = 'none';
+			}
 
 			update();
 			window.addEventListener('load', update);
